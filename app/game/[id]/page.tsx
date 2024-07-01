@@ -27,7 +27,7 @@ function Page({ params }: { params: { id: string } }) {
                     </h1>
                     {game ? (
                         <div className="overflow-x-auto max-h-[70vh]">
-                            <table className="table w-full table-pin-rows table-pin-cols">
+                            <table className="table w-full table-pin-rows">
                                 <thead>
                                     <tr className="">
                                         <th
