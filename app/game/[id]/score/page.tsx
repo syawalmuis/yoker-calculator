@@ -97,7 +97,7 @@ function Page({ params }: { params: { id: string } }) {
                                 <input
                                     type="number"
                                     placeholder="Skor"
-                                    className="input input-bordered w-full input-sm"
+                                    className="input input-bordered w-full"
                                     onChange={(e) =>
                                         onChangePlayerScoreInput(e, i)
                                     }

@@ -41,7 +41,7 @@ function Page() {
                         {Array.from({ length: 5 }).map((_, i) => (
                             <label
                                 key={i}
-                                className="input input-bordered input-sm flex items-center gap-2"
+                                className="input input-bordered flex items-center gap-2"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
