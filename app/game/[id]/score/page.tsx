@@ -114,7 +114,7 @@ function Page({ params }: { params: { id: string } }) {
 
                         <button
                             type="submit"
-                            className="btn w-full btn-xs !mt-4"
+                            className="btn w-full btn-sm !mt-4"
                         >
                             Simpan
                         </button>

@@ -2,6 +2,7 @@
 
 import { getDate } from "@/utils/date";
 import { findGame } from "@/utils/game";
+import { log } from "console";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
@@ -9,6 +10,8 @@ import { Fragment, useEffect, useState } from "react";
 function Page({ params }: { params: { id: string } }) {
     const [game, setGame] = useState<Game | null>(null);
     const router = useRouter();
+    console.log(game);
+
     useEffect(() => {
         // fetch game by id
         const game = findGame(params.id) as Game;
@@ -88,11 +91,13 @@ function Page({ params }: { params: { id: string } }) {
                                                 align="right"
                                                 className="bg-base-200"
                                             >
-                                                {player.score.history.reduce(
-                                                    (prev, current) =>
-                                                        Number(prev) +
-                                                        Number(current)
-                                                )}
+                                                {player.score.history.length > 0
+                                                    ? player.score.history.reduce(
+                                                          (prev, current) =>
+                                                              Number(prev) +
+                                                              Number(current)
+                                                      )
+                                                    : 0}
                                             </td>
                                         ))}
                                     </tr>

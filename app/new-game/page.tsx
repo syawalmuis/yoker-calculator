@@ -63,7 +63,7 @@ function Page() {
 
                         <button
                             type="submit"
-                            className="btn btn-xs w-full btn-primary"
+                            className="btn btn-sm w-full btn-primary"
                         >
                             Buat Game
                         </button>
