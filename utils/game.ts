@@ -3,7 +3,18 @@ const getGames = () => {
     return games || [];
 };
 
-const createGame = (players: string[]) => {
+const excecuteCallback = (
+    callback: ((_: boolean) => void) | null,
+    params: boolean
+) => {
+    if (typeof callback === "function") callback(params);
+};
+
+const createGame = (
+    players: string[],
+    setIsLoading: ((_: boolean) => void) | null = null
+) => {
+    excecuteCallback(setIsLoading, true);
     const game: Game = {
         id: Math.random().toString(36).substring(7),
         players: players.map((name) => ({
@@ -20,6 +31,11 @@ const createGame = (players: string[]) => {
         createdAt: String(new Date()),
     };
     localStorage.setItem("games", JSON.stringify([...getGames(), game]));
+    excecuteCallback(setIsLoading, false);
+};
+
+const shareGame = (game: Game) => {
+    localStorage.setItem("games", JSON.stringify([...getGames(), game]));
 };
 
 const findGame = (id: string) => {
@@ -27,15 +43,28 @@ const findGame = (id: string) => {
     return games.find((game) => game.id === id);
 };
 
-const updateGame = (id: string, game: Game) => {
+const updateGame = (
+    id: string,
+    game: Game,
+    setIsLoading: ((_: boolean) => void) | null = null
+) => {
+    excecuteCallback(setIsLoading, true);
     const games = getGames() as Game[];
     const index = games.findIndex((game) => game.id === id);
     games[index] = game;
     console.log(games[index], game);
     localStorage.setItem("games", JSON.stringify(games));
+    setTimeout(() => {
+        excecuteCallback(setIsLoading, false);
+    }, 100);
 };
 
-const updatePlayer = (id: string, players: string[]) => {
+const updatePlayer = (
+    id: string,
+    players: string[],
+    setIsLoading: ((_: boolean) => void) | null = null
+) => {
+    excecuteCallback(setIsLoading, true);
     const game = findGame(id);
     if (game) {
         players.forEach((name, i) => {
@@ -43,7 +72,7 @@ const updatePlayer = (id: string, players: string[]) => {
             game.players[i] = { ...player, name };
         });
     }
-    updateGame(id, game as Game);
+    updateGame(id, game as Game, setIsLoading);
 };
 
-export { getGames, createGame, findGame, updateGame, updatePlayer };
+export { getGames, createGame, findGame, updateGame, updatePlayer, shareGame };

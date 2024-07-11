@@ -1,14 +1,23 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getGames } from "../utils/game";
 import { getDate } from "../utils/date";
 import Link from "next/link";
+import { AppContext } from "@/context/AppContext";
+import { log } from "console";
+import Loading from "@/components/Loading";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
     const [games, setGames] = useState<Game[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const router = useRouter();
+
     useEffect(() => {
         setGames(getGames());
+        return setIsLoading(false);
     }, []);
+    if (isLoading) return <Loading />;
     return (
         <main className="flex min-h-screen flex-col items-center p-5">
             <div className="card bg-base-100 md:max-w-lg w-full mx-auto">
@@ -40,12 +49,17 @@ export default function Home() {
                                             <td>{game.id}</td>
                                             <td>{getDate(game.createdAt)}</td>
                                             <td align="right">
-                                                <Link
+                                                <button
                                                     className="badge badge-neutral badge-sm"
-                                                    href={"/game/" + game.id}
+                                                    onClick={() => {
+                                                        setIsLoading(true);
+                                                        router.push(
+                                                            "/game/" + game.id
+                                                        );
+                                                    }}
                                                 >
                                                     Detail
-                                                </Link>
+                                                </button>
                                             </td>
                                         </tr>
                                     ))}

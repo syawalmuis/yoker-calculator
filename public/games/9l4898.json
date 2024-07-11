@@ -1,0 +1,89 @@
+{
+  "id": "9l4898",
+  "players": [
+    {
+      "id": "in859d",
+      "name": "Player 3",
+      "score": {
+        "current": 400,
+        "history": [
+          20,
+          20,
+          20,
+          20,
+          20,
+          100,
+          400
+        ]
+      }
+    },
+    {
+      "id": "ea2ec",
+      "name": "Player 2",
+      "score": {
+        "current": -50,
+        "history": [
+          30,
+          30,
+          30,
+          30,
+          30,
+          500,
+          -50
+        ]
+      }
+    },
+    {
+      "id": "67qhum",
+      "name": "Player",
+      "score": {
+        "current": 350,
+        "history": [
+          40,
+          40,
+          40,
+          40,
+          40,
+          50,
+          350
+        ]
+      }
+    },
+    {
+      "id": "50kle",
+      "name": "Player 6",
+      "score": {
+        "current": 400,
+        "history": [
+          50,
+          50,
+          50,
+          50,
+          50,
+          -50,
+          400
+        ]
+      }
+    },
+    {
+      "id": "uhd40g",
+      "name": "Player 5",
+      "score": {
+        "current": 400,
+        "history": [
+          60,
+          1000,
+          1000,
+          1000,
+          1000,
+          -3860,
+          400
+        ]
+      }
+    }
+  ],
+  "rounds": {
+    "current": 7
+  },
+  "createdAt": "Thu Jul 11 2024 13:02:27 GMT+0800 (Central Indonesia Time)"
+}

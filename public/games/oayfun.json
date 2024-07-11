@@ -1,0 +1,49 @@
+{
+  "id": "oayfun",
+  "players": [
+    {
+      "id": "td2fzs",
+      "name": "Player 1",
+      "score": {
+        "current": 0,
+        "history": []
+      }
+    },
+    {
+      "id": "lac1ge",
+      "name": "Player 2",
+      "score": {
+        "current": 0,
+        "history": []
+      }
+    },
+    {
+      "id": "ahhik",
+      "name": "Player 3",
+      "score": {
+        "current": 0,
+        "history": []
+      }
+    },
+    {
+      "id": "1hd8t",
+      "name": "Player 4",
+      "score": {
+        "current": 0,
+        "history": []
+      }
+    },
+    {
+      "id": "osfvi",
+      "name": "Player 5",
+      "score": {
+        "current": 0,
+        "history": []
+      }
+    }
+  ],
+  "rounds": {
+    "current": 0
+  },
+  "createdAt": "Thu Jul 11 2024 15:06:04 GMT+0800 (Central Indonesia Time)"
+}

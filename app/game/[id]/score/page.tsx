@@ -1,19 +1,22 @@
 "use client";
 import Link from "next/link";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import { findGame, updateGame } from "@/utils/game";
 import { useRouter, useSearchParams } from "next/navigation";
 import { getDate } from "@/utils/date";
+import { AppContext } from "@/context/AppContext";
 
 function Page({ params }: { params: { id: string } }) {
     const router = useRouter();
     const searchParams = useSearchParams();
     const history_id = searchParams.get("history_id");
     const [scores, setScores] = useState<number[]>([0, 0, 0, 0, 0]);
+    const { setIsLoading } = useContext(AppContext);
 
     const [players, setPlayers] = useState<Player[]>([]);
     const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setIsLoading(true);
         const newPlayers = !history_id
             ? players.map((player, i) => {
                   return {
@@ -33,7 +36,8 @@ function Page({ params }: { params: { id: string } }) {
                 current: Number(game?.rounds.current) + (history_id ? 0 : 1),
             },
         } as Game;
-        updateGame(game?.id as string, newGame);
+        setIsLoading(true);
+        updateGame(game?.id as string, newGame, setIsLoading);
         e.currentTarget.reset();
         router.push(`/game/${game?.id}`);
     };
@@ -42,7 +46,9 @@ function Page({ params }: { params: { id: string } }) {
         const { history } = player.score;
         const score = scores[idx];
         if (!history_id) {
-            return history.reduce((prev, next) => prev + next) + score;
+            return history.length > 0
+                ? history.reduce((prev, next) => prev + next) + score
+                : 0;
         }
         history[Number(history_id)] = score;
         return history.reduce((prev, next) => prev + next);
@@ -79,6 +85,7 @@ function Page({ params }: { params: { id: string } }) {
             setScores(scores);
         }
     }, [params.id, history_id]);
+
     return (
         <main className="min-h-screen flex items-center flex-col px-5 py-20">
             <div className="card bg-base-100 md:max-w-lg w-full">
@@ -129,7 +136,7 @@ function Page({ params }: { params: { id: string } }) {
                                               ]
                                             : "",
                                     }}
-                                    required
+                                    step={5}
                                 />
                             </label>
                         ))}

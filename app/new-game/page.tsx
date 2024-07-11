@@ -3,9 +3,11 @@ import Link from "next/link";
 import { FormEvent, useState } from "react";
 import { createGame } from "@/utils/game";
 import { useRouter } from "next/navigation";
+import Loading from "@/components/Loading";
 
 function Page() {
     const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
     const [players, setPlayers] = useState<string[]>([
         "Player 1",
         "Player 2",
@@ -15,7 +17,7 @@ function Page() {
     ]);
     const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        createGame(players);
+        createGame(players, setIsLoading);
         router.push("/");
     };
 
@@ -27,6 +29,8 @@ function Page() {
         newPlayers[index] = e.target.value;
         setPlayers(newPlayers);
     };
+    if (isLoading) return <Loading />;
+
     return (
         <main className="min-h-screen flex items-center flex-col px-5 py-20">
             <div className="card bg-base-100 md:max-w-lg w-full">

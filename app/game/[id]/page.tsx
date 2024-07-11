@@ -3,24 +3,46 @@
 import { getDate } from "@/utils/date";
 import { findGame } from "@/utils/game";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
+import { FaWhatsapp } from "react-icons/fa6";
 
 function Page({ params }: { params: { id: string } }) {
     const [game, setGame] = useState<Game | null>(null);
     const router = useRouter();
+    console.log(router, usePathname());
 
     useEffect(() => {
-        // fetch game by id
         const game = findGame(params.id) as Game;
         setGame(game);
     }, [params.id]);
+
     return (
         <main className="px-5 py-10 min-h-screen ">
             <div className="card bg-base-100 md:max-w-lg w-full mx-auto">
                 <div className="card-body">
                     <h1 className="card-title mb-4 flex justify-between gap-5 items-center">
-                        <span>{game?.id}</span>
+                        <div className="flex items-center justify-center gap-2 leading-4">
+                            <span>{game?.id} </span>
+                            <button
+                                className="px-4 py-1 leading-4 text-sm rounded-2xl bg-[#075e54] text-white flex items-center gap-1"
+                                onClick={() => {
+                                    fetch("/api/share", {
+                                        method: "POST",
+                                        headers: {
+                                            "Content-Type": "application/json",
+                                        },
+                                        body: JSON.stringify(game),
+                                    })
+                                        .then((res) => res.json())
+                                        .then(() => {
+                                            location.href = `whatsapp://send?text=${location.origin}/share/${game?.id}`;
+                                        });
+                                }}
+                            >
+                                <FaWhatsapp className="text-lg" /> Share
+                            </button>
+                        </div>
                         <span>{game && getDate(game?.createdAt)}</span>
                     </h1>
                     {game ? (
