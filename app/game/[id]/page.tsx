@@ -12,7 +12,7 @@ import { FaWhatsapp } from "react-icons/fa6";
 function Page({ params }: { params: { id: string } }) {
     const [game, setGame] = useState<Game | null>(null);
     const router = useRouter();
-    const { setIsLoading } = useContext(AppContext);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const game = findGame(params.id) as Game;
@@ -41,14 +41,14 @@ function Page({ params }: { params: { id: string } }) {
                                         })
                                             .then((res) => res.json())
                                             .then(() => {
-                                                location.href = `whatsapp://send?text=${location.origin}/share/${game?.id}`;
-                                            })
-                                            .finally(() => {
                                                 setIsLoading(false);
+                                                location.href = `whatsapp://send?text=${location.origin}/share/${game?.id}`;
                                             });
                                     }}
+                                    {...{ disabled: isLoading }}
                                 >
-                                    <FaWhatsapp className="text-lg" /> Share
+                                    <FaWhatsapp className="text-lg" />{" "}
+                                    {isLoading ? "Loading..." : "Share"}
                                 </button>
                             </div>
                             <span>{game && getDate(game?.createdAt)}</span>

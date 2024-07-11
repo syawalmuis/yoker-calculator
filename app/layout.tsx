@@ -20,7 +20,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={inter.className}>
-                <div className="navbar bg-base-100">
+                <div className="navbar bg-base-100 relative z-10">
                     <div className="navbar-start">
                         <div className="dropdown">
                             <div
