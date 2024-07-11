@@ -9,20 +9,18 @@ function Page({ params }: { params: { id: string } }) {
     const router = useRouter();
     const searchParams = useSearchParams();
     const history_id = searchParams.get("history_id");
+    const [scores, setScores] = useState<number[]>([0, 0, 0, 0, 0]);
 
     const [players, setPlayers] = useState<Player[]>([]);
     const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const newPlayers = !history_id
-            ? players.map((player) => {
+            ? players.map((player, i) => {
                   return {
                       ...player,
                       score: {
                           ...player.score,
-                          history: [
-                              ...player.score.history,
-                              player.score.current,
-                          ],
+                          history: [...player.score.history, scores[i]],
                       },
                   };
               })
@@ -40,19 +38,32 @@ function Page({ params }: { params: { id: string } }) {
         router.push(`/game/${game?.id}`);
     };
 
+    const totalScore = (player: Player, idx: number) => {
+        const { history } = player.score;
+        const score = scores[idx];
+        if (!history_id) {
+            return history.reduce((prev, next) => prev + next) + score;
+        }
+        history[Number(history_id)] = score;
+        return history.reduce((prev, next) => prev + next);
+    };
+
     const onChangePlayerScoreInput = (
         e: React.ChangeEvent<HTMLInputElement>,
         idx: number
     ) => {
         const newPlayers = [...players];
+        let value = Number(e.target.value);
         if (!history_id) {
-            newPlayers[idx].score.current = parseInt(e.target.value);
+            newPlayers[idx].score.current = value;
         } else {
-            newPlayers[idx].score.history[Number(history_id)] = parseInt(
-                e.target.value
-            );
+            newPlayers[idx].score.history[Number(history_id)] = value;
         }
         setPlayers(newPlayers);
+        setScores((scores) => {
+            scores[idx] = value;
+            return scores;
+        });
     };
     const [game, setGame] = useState<Game | null>(null);
 
@@ -60,7 +71,14 @@ function Page({ params }: { params: { id: string } }) {
         const game = findGame(params.id) as Game;
         setGame(game);
         setPlayers(game?.players);
-    }, [params.id]);
+
+        if (history_id) {
+            const scores = game.players.map(
+                (player) => player.score.history[Number(history_id)]
+            );
+            setScores(scores);
+        }
+    }, [params.id, history_id]);
     return (
         <main className="min-h-screen flex items-center flex-col px-5 py-20">
             <div className="card bg-base-100 md:max-w-lg w-full">
@@ -93,6 +111,9 @@ function Page({ params }: { params: { id: string } }) {
                                     <span className="label-text -mb-1">
                                         {player.name}
                                     </span>
+                                    <span className="font-mono text-sm">
+                                        Skor: {totalScore(player, i)}
+                                    </span>
                                 </div>
                                 <input
                                     type="number"
@@ -108,6 +129,7 @@ function Page({ params }: { params: { id: string } }) {
                                               ]
                                             : "",
                                     }}
+                                    required
                                 />
                             </label>
                         ))}

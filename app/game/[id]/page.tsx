@@ -2,7 +2,6 @@
 
 import { getDate } from "@/utils/date";
 import { findGame } from "@/utils/game";
-import { log } from "console";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
@@ -10,7 +9,6 @@ import { Fragment, useEffect, useState } from "react";
 function Page({ params }: { params: { id: string } }) {
     const [game, setGame] = useState<Game | null>(null);
     const router = useRouter();
-    console.log(game);
 
     useEffect(() => {
         // fetch game by id
@@ -27,9 +25,16 @@ function Page({ params }: { params: { id: string } }) {
                     </h1>
                     {game ? (
                         <div className="overflow-x-auto max-h-[70vh]">
-                            <table className="table w-full table-pin-rows table-pin-cols">
+                            <table className="table w-full table-pin-rows table-pin-cols tracking-wide">
                                 <thead>
-                                    <tr className="">
+                                    <tr
+                                        className="cursor-pointer"
+                                        onClick={() =>
+                                            router.push(
+                                                `/game/${game.id}/player`
+                                            )
+                                        }
+                                    >
                                         <th
                                             className="w-5 bg-base-100"
                                             align="center"
@@ -47,7 +52,7 @@ function Page({ params }: { params: { id: string } }) {
                                         ))}
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody className="font-mono">
                                     {Array.from({
                                         length: game.rounds.current,
                                     }).map((_, i) => (
@@ -77,9 +82,9 @@ function Page({ params }: { params: { id: string } }) {
                                     ))}
                                 </tbody>
                                 <tfoot>
-                                    <tr className="">
+                                    <tr>
                                         <th
-                                            className="w-5 bg-base-100"
+                                            className="w-5 bg-base-100 font-mono"
                                             align="center"
                                         >
                                             {" "}
@@ -89,7 +94,7 @@ function Page({ params }: { params: { id: string } }) {
                                             <td
                                                 key={player.id}
                                                 align="right"
-                                                className="bg-base-200"
+                                                className="bg-base-200 text-[0.9rem] font-mono"
                                             >
                                                 {player.score.history.length > 0
                                                     ? player.score.history.reduce(
