@@ -1,16 +1,24 @@
 "use client";
 import { AppContext } from "@/context/AppContext";
-import React, { ReactNode, useState } from "react";
+import { ReactNode, useContext, useEffect, useState } from "react";
 import Loading from "./Loading";
 
 function App({ children }: { children: ReactNode }) {
     const [isLoading, setIsLoading] = useState(true);
+    useEffect(() => {
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 100);
+        return () => {
+            setIsLoading(true);
+        };
+    }, []);
+
+    if (isLoading) return <Loading />;
     return (
-        <>
-            <AppContext.Provider value={{ isLoading, setIsLoading }}>
-                <div>{isLoading ? <Loading /> : children}</div>
-            </AppContext.Provider>
-        </>
+        <AppContext.Provider value={{ isLoading, setIsLoading }}>
+            {children}
+        </AppContext.Provider>
     );
 }
 

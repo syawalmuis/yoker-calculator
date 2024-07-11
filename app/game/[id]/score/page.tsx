@@ -5,6 +5,7 @@ import { findGame, updateGame } from "@/utils/game";
 import { useRouter, useSearchParams } from "next/navigation";
 import { getDate } from "@/utils/date";
 import { AppContext } from "@/context/AppContext";
+import App from "@/components/App";
 
 function Page({ params }: { params: { id: string } }) {
     const router = useRouter();
@@ -87,70 +88,74 @@ function Page({ params }: { params: { id: string } }) {
     }, [params.id, history_id]);
 
     return (
-        <main className="min-h-screen flex items-center flex-col px-5 py-20">
-            <div className="card bg-base-100 md:max-w-lg w-full">
-                <div className="card-body">
-                    <h1 className="card-title mb-4 flex items-center justify-between">
-                        <div className="flex flex-col">
-                            <span>
-                                {game?.id} {" - "}
-                                {game && getDate(game?.createdAt)}
-                            </span>
-                            <span className="text-sm">
-                                ronde{" "}
-                                {Number(history_id ?? game?.rounds.current) + 1}
-                            </span>
-                        </div>
-                        <Link
-                            href={`/game/${params.id}`}
-                            className="btn btn-xs btn-error"
-                        >
-                            Kembali
-                        </Link>
-                    </h1>
-                    <form className="space-y-2" onSubmit={onSubmit}>
-                        {game?.players?.map((player, i) => (
-                            <label
-                                key={player.id}
-                                className="form-control w-full"
+        <App>
+            <main className="min-h-screen flex items-center flex-col px-5 py-20">
+                <div className="card bg-base-100 md:max-w-lg w-full">
+                    <div className="card-body">
+                        <h1 className="card-title mb-4 flex items-center justify-between">
+                            <div className="flex flex-col">
+                                <span>
+                                    {game?.id} {" - "}
+                                    {game && getDate(game?.createdAt)}
+                                </span>
+                                <span className="text-sm">
+                                    ronde{" "}
+                                    {Number(
+                                        history_id ?? game?.rounds.current
+                                    ) + 1}
+                                </span>
+                            </div>
+                            <Link
+                                href={`/game/${params.id}`}
+                                className="btn btn-xs btn-error"
                             >
-                                <div className="label">
-                                    <span className="label-text -mb-1">
-                                        {player.name}
-                                    </span>
-                                    <span className="font-mono text-sm">
-                                        Skor: {totalScore(player, i)}
-                                    </span>
-                                </div>
-                                <input
-                                    type="number"
-                                    placeholder="Skor"
-                                    className="input input-bordered w-full"
-                                    onChange={(e) =>
-                                        onChangePlayerScoreInput(e, i)
-                                    }
-                                    {...{
-                                        defaultValue: history_id
-                                            ? player.score.history[
-                                                  Number(history_id)
-                                              ]
-                                            : "",
-                                    }}
-                                    step={5}
-                                />
-                            </label>
-                        ))}
+                                Kembali
+                            </Link>
+                        </h1>
+                        <form className="space-y-2" onSubmit={onSubmit}>
+                            {game?.players?.map((player, i) => (
+                                <label
+                                    key={player.id}
+                                    className="form-control w-full"
+                                >
+                                    <div className="label">
+                                        <span className="label-text -mb-1">
+                                            {player.name}
+                                        </span>
+                                        <span className="font-mono text-sm">
+                                            Skor: {totalScore(player, i)}
+                                        </span>
+                                    </div>
+                                    <input
+                                        type="number"
+                                        placeholder="Skor"
+                                        className="input input-bordered w-full"
+                                        onChange={(e) =>
+                                            onChangePlayerScoreInput(e, i)
+                                        }
+                                        {...{
+                                            defaultValue: history_id
+                                                ? player.score.history[
+                                                      Number(history_id)
+                                                  ]
+                                                : "",
+                                        }}
+                                        step={5}
+                                    />
+                                </label>
+                            ))}
 
-                        <button
-                            type="submit"
-                            className="btn w-full btn-sm !mt-4"
-                        >
-                            Simpan
-                        </button>
-                    </form>
+                            <button
+                                type="submit"
+                                className="btn w-full btn-sm !mt-4"
+                            >
+                                Simpan
+                            </button>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </main>
+            </main>
+        </App>
     );
 }
 
