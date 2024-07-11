@@ -5,13 +5,14 @@ import { AppContext } from "@/context/AppContext";
 import { getDate } from "@/utils/date";
 import { findGame } from "@/utils/game";
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Fragment, useContext, useEffect, useState } from "react";
 import { FaWhatsapp } from "react-icons/fa6";
 
 function Page({ params }: { params: { id: string } }) {
     const [game, setGame] = useState<Game | null>(null);
     const router = useRouter();
+    const { setIsLoading } = useContext(AppContext);
 
     useEffect(() => {
         const game = findGame(params.id) as Game;
@@ -29,6 +30,7 @@ function Page({ params }: { params: { id: string } }) {
                                 <button
                                     className="px-4 py-1 leading-4 text-sm rounded-2xl bg-[#075e54] text-white flex items-center gap-1"
                                     onClick={() => {
+                                        setIsLoading(true);
                                         fetch("/api/share", {
                                             method: "POST",
                                             headers: {
@@ -40,6 +42,9 @@ function Page({ params }: { params: { id: string } }) {
                                             .then((res) => res.json())
                                             .then(() => {
                                                 location.href = `whatsapp://send?text=${location.origin}/share/${game?.id}`;
+                                            })
+                                            .finally(() => {
+                                                setIsLoading(false);
                                             });
                                     }}
                                 >
@@ -50,7 +55,7 @@ function Page({ params }: { params: { id: string } }) {
                         </h1>
                         {game ? (
                             <div className="overflow-x-auto max-h-[70vh]">
-                                <table className="table w-full table-pin-rows table-pin-cols tracking-wide">
+                                <table className="table select-none w-full table-pin-rows table-pin-cols tracking-wide">
                                     <thead>
                                         <tr
                                             className="cursor-pointer"
