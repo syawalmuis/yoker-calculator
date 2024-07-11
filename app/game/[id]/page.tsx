@@ -16,10 +16,6 @@ function Page({ params }: { params: { id: string } }) {
     useEffect(() => {
         const game = findGame(params.id) as Game;
         setGame(game);
-        console.log("page");
-        return () => {
-            console.log("close 1");
-        };
     }, [params.id]);
 
     return (

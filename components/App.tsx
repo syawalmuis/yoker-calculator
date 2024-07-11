@@ -1,6 +1,6 @@
 "use client";
 import { AppContext } from "@/context/AppContext";
-import { ReactNode, useContext, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import Loading from "./Loading";
 
 function App({ children }: { children: ReactNode }) {
