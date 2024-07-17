@@ -9,5 +9,5 @@ export async function GET(_: Request, context: any) {
         await sql`select * from games where id=${params.id}`;
 
     if (data.rows.length <= 0) return NextResponse.json(false, { status: 404 });
-    return NextResponse.json(data);
+    return NextResponse.json(data.rows);
 }
