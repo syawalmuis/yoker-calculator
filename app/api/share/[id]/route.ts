@@ -3,9 +3,9 @@ import { NextResponse } from "next/server";
 
 export async function GET(_: Request, context: any) {
     const { params } = context;
-    const { rows } =
+    const data =
         await sql`select * from games where id=${params.id}`;
 
-    if (rows.length <= 0) return NextResponse.json(false, { status: 404 });
-    return NextResponse.json((rows));
+    if (data.rows.length <= 0) return NextResponse.json(false, { status: 404 });
+    return NextResponse.json(data);
 }
