@@ -13,7 +13,7 @@ function Page({ params }: { params: { id: string } }) {
             .then((res) => res.json())
             .then((data) => {
                 if (!data) return router.push("/");
-                shareGame(data);
+                shareGame(JSON.parse(data.body));
                 router.push(`/game/${data.id}`);
             })
             .catch((error) => {
