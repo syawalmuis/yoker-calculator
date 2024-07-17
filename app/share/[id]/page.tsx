@@ -5,6 +5,8 @@ import { shareGame } from "@/utils/game";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
+export const dynamic = 'force-dynamic';
+
 function Page({ params }: { params: { id: string } }) {
     const router = useRouter();
 
