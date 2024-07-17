@@ -9,7 +9,9 @@ function Page({ params }: { params: { id: string } }) {
     const router = useRouter();
 
     useEffect(() => {
-        fetch(`/api/share/${params.id}`)
+        fetch(`/api/share/${params.id}`, {
+            cache: "no-store"
+        })
             .then((res) => res.json())
             .then((data) => {
                 if (!data) return router.push("/");
