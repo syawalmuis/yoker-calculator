@@ -16,5 +16,5 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
     const games = await sql`select * from games limit 1`;
-    return NextResponse.json(games.rows);
+    return NextResponse.json(Math.floor(Math.random() * 50);
 }
