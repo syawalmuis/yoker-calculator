@@ -32,6 +32,7 @@ const createGame = (
     };
     localStorage.setItem("games", JSON.stringify([...getGames(), game]));
     excecuteCallback(setIsLoading, false);
+    return game;
 };
 
 const shareGame = (game: Game) => {
@@ -40,7 +41,18 @@ const shareGame = (game: Game) => {
 
 const findGame = (id: string) => {
     const games = getGames() as Game[];
-    return games.find((game) => game.id === id);
+    const game = games.find((game) => game.id === id);
+
+    return (
+        {
+            ...game,
+            player: game?.players.sort(
+                (a, b) =>
+                    b.score.history.reduce((prev, next) => prev + next) -
+                    a.score.history.reduce((prev, next) => prev + next)
+            ),
+        } || null
+    );
 };
 
 const updateGame = (
@@ -68,8 +80,10 @@ const updatePlayer = (
     const game = findGame(id);
     if (game) {
         players.forEach((name, i) => {
-            let player = game.players[i];
-            game.players[i] = { ...player, name };
+            if (game.players) {
+                let player = game.players[i];
+                game.players[i] = { ...player, name };
+            }
         });
     }
     updateGame(id, game as Game, setIsLoading);

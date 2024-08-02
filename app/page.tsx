@@ -7,6 +7,7 @@ import { AppContext } from "@/context/AppContext";
 import { log } from "console";
 import Loading from "@/components/Loading";
 import { useRouter } from "next/navigation";
+import { setVersion } from "@/utils/version";
 
 export default function Home() {
     const [games, setGames] = useState<Game[]>([]);

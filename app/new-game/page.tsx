@@ -17,8 +17,8 @@ function Page() {
     ]);
     const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        createGame(players, setIsLoading);
-        router.push("/");
+        const game = createGame(players, setIsLoading);
+        router.push(`/game/${game.id}`);
     };
 
     const onChangePlayerInput = (

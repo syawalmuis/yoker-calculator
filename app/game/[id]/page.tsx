@@ -1,18 +1,22 @@
 "use client";
 
 import App from "@/components/App";
+import NewVersion from "@/components/NewVersion";
+import OldVersion from "@/components/OldVersion";
 import { AppContext } from "@/context/AppContext";
 import { getDate } from "@/utils/date";
 import { findGame } from "@/utils/game";
+import { getVersion } from "@/utils/version";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Fragment, useContext, useEffect, useState } from "react";
 import { FaWhatsapp } from "react-icons/fa6";
 
 function Page({ params }: { params: { id: string } }) {
     const [game, setGame] = useState<Game | null>(null);
-    const router = useRouter();
+    const searchParams = useSearchParams();
     const [isLoading, setIsLoading] = useState(false);
+    const [version, setVersion] = useState(getVersion() ?? "new");
 
     useEffect(() => {
         const game = findGame(params.id) as Game;
@@ -51,99 +55,17 @@ function Page({ params }: { params: { id: string } }) {
                                     {isLoading ? "Loading..." : "Share"}
                                 </button>
                             </div>
-                            <span>{game && getDate(game?.createdAt)}</span>
+                            <span className="uppercase tracking-wide font-mono text-sm">
+                                Ronde {game && game.rounds.current}
+                            </span>
                         </h1>
                         {game ? (
                             <div className="overflow-x-auto max-h-[70vh]">
-                                <table className="table select-none w-full table-pin-rows table-pin-cols tracking-wide">
-                                    <thead>
-                                        <tr
-                                            className="cursor-pointer"
-                                            onClick={() =>
-                                                router.push(
-                                                    `/game/${game.id}/player`
-                                                )
-                                            }
-                                        >
-                                            <th
-                                                className="w-5 bg-base-100"
-                                                align="center"
-                                            >
-                                                Ronde
-                                            </th>
-                                            {game.players.map((player) => (
-                                                <td
-                                                    key={player.id}
-                                                    align="right"
-                                                    className="bg-base-100"
-                                                >
-                                                    {player.name}
-                                                </td>
-                                            ))}
-                                        </tr>
-                                    </thead>
-                                    <tbody className="font-mono">
-                                        {Array.from({
-                                            length: game.rounds.current,
-                                        }).map((_, i) => (
-                                            <tr
-                                                key={i}
-                                                className="cursor-pointer"
-                                                onClick={() =>
-                                                    router.push(
-                                                        `/game/${game.id}/score?history_id=${i}`
-                                                    )
-                                                }
-                                            >
-                                                <th
-                                                    className="w-5"
-                                                    align="center"
-                                                >
-                                                    {i + 1}
-                                                </th>
-                                                {game.players.map((player) => (
-                                                    <Fragment key={player.id}>
-                                                        <td align="right">
-                                                            {
-                                                                player.score
-                                                                    .history[i]
-                                                            }
-                                                        </td>
-                                                    </Fragment>
-                                                ))}
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th
-                                                className="w-5 bg-base-100 font-mono"
-                                                align="center"
-                                            >
-                                                {" "}
-                                                Skor
-                                            </th>
-                                            {game.players.map((player) => (
-                                                <td
-                                                    key={player.id}
-                                                    align="right"
-                                                    className="bg-base-200 text-[0.9rem] font-mono"
-                                                >
-                                                    {player.score.history
-                                                        .length > 0
-                                                        ? player.score.history.reduce(
-                                                              (prev, current) =>
-                                                                  Number(prev) +
-                                                                  Number(
-                                                                      current
-                                                                  )
-                                                          )
-                                                        : 0}
-                                                </td>
-                                            ))}
-                                        </tr>
-                                    </tfoot>
-                                </table>
+                                {version === "old" ? (
+                                    <OldVersion game={game} />
+                                ) : (
+                                    <NewVersion game={game} />
+                                )}
                             </div>
                         ) : (
                             <div>No game found</div>

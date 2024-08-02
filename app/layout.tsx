@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
-import { JSONToFile } from "@/utils/converter";
+import { getVersion, setVersion } from "@/utils/version";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -61,7 +61,12 @@ export default function RootLayout({
                             Yoker Kalkulator
                         </Link>
                     </div>
-                    <div className="navbar-end"></div>
+                    <div className="navbar-end">
+                        {/* <select id="version" className="select select-xs">
+                            <option value="new">Baru</option>
+                            <option value="old">Lama</option>
+                        </select> */}
+                    </div>
                 </div>
                 {children}
             </body>
