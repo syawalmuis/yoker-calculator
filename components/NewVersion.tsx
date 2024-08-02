@@ -21,7 +21,7 @@ function NewVersion({ game }: { game: Game }) {
                     {Array.from({
                         length: game.rounds.current,
                     }).map((_, i) => (
-                        <th key={i} align="right" className="w-5">
+                        <th key={i} align="right" className="w-5 font-mono">
                             {i + 1}
                         </th>
                     ))}
@@ -49,7 +49,7 @@ function NewVersion({ game }: { game: Game }) {
                                         `/game/${game.id}/score?history_id=${i}`
                                     )
                                 }
-                                className="cursor-pointer text-right"
+                                className="cursor-pointer text-right font-mono"
                             >
                                 {player.score.history[i]}
                             </td>
