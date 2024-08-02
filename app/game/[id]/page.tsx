@@ -60,7 +60,10 @@ function Page({ params }: { params: { id: string } }) {
                             </span>
                         </h1>
                         {game ? (
-                            <div className="overflow-x-auto max-h-[70vh]">
+                            <div
+                                className="overflow-x-auto max-h-[70vh]"
+                                id="table"
+                            >
                                 {version === "old" ? (
                                     <OldVersion game={game} />
                                 ) : (

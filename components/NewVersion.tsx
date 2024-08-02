@@ -1,23 +1,36 @@
 import { useRouter } from "next/navigation";
+import { useEffect, useRef } from "react";
 
 function NewVersion({ game }: { game: Game }) {
     const router = useRouter();
+    const table = useRef(null);
+    useEffect(() => {
+        const wrapper = document.querySelector("#table");
+        wrapper?.scrollBy(wrapper.scrollWidth, 0);
+    }, []);
     return (
-        <table className="table select-none w-full tracking-wide">
+        <table className="table select-none w-full tracking-wide" ref={table}>
             <thead>
                 <tr
                     className="cursor-pointer"
                     onClick={() => router.push(`/game/${game.id}/player`)}
                 >
-                    <td className="w-5 bg-base-100 sticky left-0" align="left">
+                    <td className="bg-base-100 sticky left-0" align="left">
                         Pemain
                     </td>
                     {Array.from({
                         length: game.rounds.current,
                     }).map((_, i) => (
-                        <th key={i}>{i + 1}</th>
+                        <th key={i} align="right" className="w-5">
+                            {i + 1}
+                        </th>
                     ))}
-                    <th className="bg-base-100 sticky right-0">Skor</th>
+                    <th
+                        className="w-5 bg-base-100 sticky right-0"
+                        align="right"
+                    >
+                        Skor
+                    </th>
                 </tr>
             </thead>
             <tbody className="font-mono">
@@ -36,12 +49,12 @@ function NewVersion({ game }: { game: Game }) {
                                         `/game/${game.id}/score?history_id=${i}`
                                     )
                                 }
-                                className="cursor-pointer"
+                                className="cursor-pointer text-right"
                             >
                                 {player.score.history[i]}
                             </td>
                         ))}
-                        <td className="sticky right-0 bg-base-200">
+                        <td className="sticky right-0 bg-base-200 text-right whitespace-nowrap">
                             {player.score.history.length > 0
                                 ? player.score.history.reduce(
                                       (prev, current) =>

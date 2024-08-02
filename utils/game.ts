@@ -46,11 +46,13 @@ const findGame = (id: string) => {
     return (
         {
             ...game,
-            player: game?.players.sort(
-                (a, b) =>
-                    b.score.history.reduce((prev, next) => prev + next) -
-                    a.score.history.reduce((prev, next) => prev + next)
-            ),
+            player: game?.rounds.current
+                ? game?.players.sort(
+                      (a, b) =>
+                          b.score.history?.reduce((prev, next) => prev + next) -
+                          a.score.history?.reduce((prev, next) => prev + next)
+                  )
+                : game?.players.sort(),
         } || null
     );
 };
