@@ -16,7 +16,7 @@ function Page({ params }: { params: { id: string } }) {
     const [game, setGame] = useState<Game | null>(null);
     const searchParams = useSearchParams();
     const [isLoading, setIsLoading] = useState(false);
-    const [version, setVersion] = useState(getVersion() ?? "new");
+    const [version, setVersion] = useState(searchParams.get("versi") ?? "new");
 
     useEffect(() => {
         const game = findGame(params.id) as Game;
