@@ -89,7 +89,7 @@ function Page({ params }: { params: { id: string } }) {
 
     return (
         <App>
-            <main className="min-h-screen flex items-center flex-col px-5 py-20">
+            <main className=" flex items-center flex-col px-5 py-20">
                 <div className="card bg-base-100 md:max-w-lg w-full">
                     <div className="card-body">
                         <h1 className="card-title mb-4 flex items-center justify-between">
