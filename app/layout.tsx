@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     title: "Yoker Kalkulator",
     description:
         "Aplikasi ini digunakan untuk mencatat poin ketika sedang bermain yoker tanpa menggunakan buku dan pena",
+    icons: {
+        icon: "/favicon.ic",
+        apple: "/apple-touch-icon.png",
+    },
     openGraph: {
         title: "Yoker Kalkulator",
         description:
@@ -25,6 +29,10 @@ export const metadata: Metadata = {
             },
         ],
     },
+    authors: {
+        name: "Syawal Muis",
+        url: "https://syawalmuis.com",
+    },
 };
 
 export default function RootLayout({
@@ -34,6 +42,19 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
+            <head>
+                <link
+                    type="image/png"
+                    sizes="96x96"
+                    rel="icon"
+                    href="/favicon.png"
+                />
+                <link
+                    rel="apple-touch-icon"
+                    href="/favicon.png"
+                    type="image/png"
+                />
+            </head>
             <body className={inter.className}>
                 <div className="navbar bg-base-100 relative z-10">
                     <div className="navbar-start">
