@@ -75,7 +75,7 @@ function Page({ params }: { params: { id: string } }) {
                 <div className="fixed bottom-0 w-full bg-base-100 left-0 z-20 pt-6 pb-6 flex items-center justify-center">
                     <Link
                         href={`/game/${params.id}/score`}
-                        className="border-white border-2 bg-primary h-14 w-14 flex items-center justify-center rounded-full text-white fill-white absolute -top-8 right-4"
+                        className="border-white border-2 bg-primary h-14 w-14 flex items-center justify-center rounded-full text-white fill-white absolute -top-8 right-6"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
