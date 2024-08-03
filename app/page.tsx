@@ -20,7 +20,7 @@ export default function Home() {
     }, []);
     if (isLoading) return <Loading />;
     return (
-        <main className="flex  flex-col items-center p-5">
+        <main className="flex flex-col items-center min-h-[80vh] p-5">
             <div className="card bg-base-100 md:max-w-lg w-full mx-auto">
                 <div className="card-body">
                     <h1 className="card-title uppercase tracking-wider mb-5 flex justify-between items-center gap-5">
@@ -67,7 +67,7 @@ export default function Home() {
                                 </tbody>
                             </table>
                         ) : (
-                            <div className="text-center">No game found</div>
+                            <div className="text-center">Belum ada game</div>
                         )}
                     </div>
                 </div>
