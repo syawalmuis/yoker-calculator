@@ -20,7 +20,7 @@ export default function Home() {
     }, []);
     if (isLoading) return <Loading />;
     return (
-        <main className="flex flex-col items-center min-h-[80vh] p-5">
+        <main className="flex flex-col items-center min-h-[77vh] p-5">
             <div className="card bg-base-100 md:max-w-lg w-full mx-auto">
                 <div className="card-body">
                     <h1 className="card-title uppercase tracking-wider mb-5 flex justify-between items-center gap-5">
