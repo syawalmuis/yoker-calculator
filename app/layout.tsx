@@ -2,14 +2,29 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
-import { getVersion, setVersion } from "@/utils/version";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
     title: "Yoker Kalkulator",
     description:
-        "Aplikasi ini digunakan untuk membantu player yoker yg tidak ada modal book & pen",
+        "Aplikasi ini digunakan untuk mencatat poin ketika sedang bermain yoker tanpa menggunakan buku dan pena",
+    openGraph: {
+        title: "Yoker Kalkulator",
+        description:
+            "Aplikasi ini digunakan untuk mencatat poin ketika sedang bermain yoker tanpa menggunakan buku dan pena",
+        type: "website",
+        url: "https://yoker-kalkulator.vercel.app/",
+        locale: "id_ID",
+        images: [
+            {
+                url: "https://yoker-kalkulator.vercel.app/og-image.jpg",
+                width: 800,
+                height: 600,
+                alt: "Yoker Kalkulator",
+            },
+        ],
+    },
 };
 
 export default function RootLayout({
@@ -61,12 +76,7 @@ export default function RootLayout({
                             Yoker Kalkulator
                         </Link>
                     </div>
-                    <div className="navbar-end">
-                        {/* <select id="version" className="select select-xs">
-                            <option value="new">Baru</option>
-                            <option value="old">Lama</option>
-                        </select> */}
-                    </div>
+                    <div className="navbar-end"></div>
                 </div>
                 {children}
             </body>
