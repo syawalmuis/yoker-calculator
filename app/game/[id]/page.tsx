@@ -25,7 +25,7 @@ function Page({ params }: { params: { id: string } }) {
 
     return (
         <App>
-            <main className="px-5 py-10 min-h-[90vh]">
+            <main className="px-5 py-10 min-h-[85vh]">
                 <div className="card bg-base-100 md:max-w-lg w-full mx-auto mt-8">
                     <div className="card-body">
                         <h1 className="card-title mb-4 flex justify-between gap-5 items-center">
